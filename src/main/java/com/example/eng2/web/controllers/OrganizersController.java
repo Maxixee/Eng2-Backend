@@ -49,8 +49,8 @@ public class OrganizersController {
 
     @GetMapping
     public ResponseEntity<PageableDto> getAll(@PageableDefault(size = 5, sort = {"id"}) Pageable pageable) {
-        Page<OrganizerProjection> projects = this.service.findAll(pageable);
-        return ResponseEntity.ok(PageableMapper.toDto(projects));
+        Page<OrganizerProjection> organizer = this.service.findAll(pageable);
+        return ResponseEntity.ok(PageableMapper.toDto(organizer));
     }
 
     @DeleteMapping("/delete/{id}")
