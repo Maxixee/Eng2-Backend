@@ -6,6 +6,8 @@ import com.example.eng2.domain.entities.Organizer;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class OrganizerMapper {

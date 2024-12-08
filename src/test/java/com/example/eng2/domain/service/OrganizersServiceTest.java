@@ -6,9 +6,12 @@ import com.example.eng2.domain.exceptions.EntityNotFoundException;
 import com.example.eng2.domain.repository.OrganizersRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.transaction.annotation.Transactional;
+
 
 import java.util.Optional;
 
