@@ -3,6 +3,7 @@ package com.example.eng2.domain.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.example.eng2.domain.entities.Event;
+import com.example.eng2.domain.entities.Organizer;
 import com.example.eng2.domain.exceptions.EntityAlreadyExistsException;
 import com.example.eng2.domain.exceptions.EntityNotFoundException;
 import com.example.eng2.domain.exceptions.InvalidRegistrationInformationException;
@@ -39,12 +40,18 @@ public class EventServiceTest {
     @Test
     @DisplayName("Should save a new event successfully")
     public void shouldSaveEventSuccessfully() {
+        Organizer organizer = new Organizer();
+        organizer.setId(5L);
+        organizer.setEmail("email");
+        organizer.setName("name");
+        organizer.setOrganization("organization");
+
         Event event = new Event();
         event.setName("Test Event");
         event.setDate(LocalDate.now());
         event.setLocal("Test Local");
         event.setDescription("Test Description");
-        event.setOrganizer(null);  // Mock the organizer association
+        event.setOrganizer(organizer);
 
         when(eventRepository.findByNameAndDate(event.getName(), event.getDate())).thenReturn(Optional.empty());
         when(eventRepository.save(event)).thenReturn(event);
@@ -88,19 +95,26 @@ public class EventServiceTest {
     @Test
     @DisplayName("Should update an existing event successfully")
     public void shouldUpdateEventSuccessfully() {
+        Organizer organizer = new Organizer();
+        organizer.setId(5L);
+        organizer.setEmail("email");
+        organizer.setName("name");
+        organizer.setOrganization("organization");
+
         Event existingEvent = new Event();
         existingEvent.setId(1L);
         existingEvent.setName("Existing Event");
         existingEvent.setDate(LocalDate.now());
         existingEvent.setLocal("Existing Local");
         existingEvent.setDescription("Existing Description");
+        existingEvent.setOrganizer(organizer);
 
         Event updatedEvent = new Event();
         updatedEvent.setName("Updated Event");
         updatedEvent.setDate(LocalDate.now().plusDays(1));
         updatedEvent.setLocal("Updated Local");
         updatedEvent.setDescription("Updated Description");
-        updatedEvent.setOrganizer(null);  // Mock the organizer association
+        updatedEvent.setOrganizer(organizer);
 
         when(eventRepository.findById(1L)).thenReturn(Optional.of(existingEvent));
         when(eventRepository.save(any(Event.class))).thenReturn(updatedEvent);
