@@ -6,8 +6,10 @@ import com.example.eng2.domain.dtos.PageableDto;
 import com.example.eng2.domain.dtos.mapper.EventMapper;
 import com.example.eng2.domain.dtos.mapper.PageableMapper;
 import com.example.eng2.domain.entities.Event;
+import com.example.eng2.domain.entities.Organizer;
 import com.example.eng2.domain.repository.projections.EventProjection;
 import com.example.eng2.domain.service.EventService;
+import com.example.eng2.domain.service.OrganizersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,9 +27,19 @@ public class EventController {
     @Autowired
     private EventService service;
 
+    @Autowired
+    private OrganizersService organizersService;
+
     @PostMapping("/save")
     public ResponseEntity<EventResponseDto> save(@RequestBody EventCreateDto dto) {
-        Event event = EventMapper.toEvent(dto);
+        Organizer organizer = organizersService.findById(dto.getOrganizerId());
+        Event event = new Event();
+        event.setOrganizer(organizer);
+        event.setName(dto.getName());
+        event.setDescription(dto.getDescription());
+        event.setDate(dto.getDate());
+        event.setLocal(dto.getLocal());
+
         this.service.save(event);
 
         return ResponseEntity.ok(EventMapper.toDto(event));
